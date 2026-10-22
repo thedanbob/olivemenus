@@ -62,13 +62,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Migrations are not run when updating the plugin #42
 
 ## 1.1.10 - 2020-05-15
-### Fixed 
+### Fixed
 - migration/down for multi-site
 - set default site ID for multi-site migrations #44
 - fix URL routing for multi-site (index and create) #43
 
 ## 1.2.0 - 2020-05-18
-### Added 
+### Added
 - extra config options for HTML output: without-container and without-ul
 
 ## 1.2.1 - 2020-05-20
@@ -89,3 +89,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 5.0.1 - 2026-06-12
 ### Improvements
 - Craft 5 improvements
+
+## 5.0.2 - 2026-10-22
+### Improvements
+- Fix active URL check

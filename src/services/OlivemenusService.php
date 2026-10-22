@@ -16,6 +16,7 @@ use craft\base\Element;
 use craft\elements\Entry;
 use craft\elements\Category;
 use craft\helpers\Html;
+use craft\helpers\UrlHelper;
 use olivestudio\olivemenus\models\OlivemenusModel;
 use olivestudio\olivemenus\Olivemenus;
 use olivestudio\olivemenus\records\OlivemenusRecord;
@@ -45,7 +46,7 @@ class OlivemenusService extends Component
                     ->all();
     }
 
-    public function getMenuById(int $id): mixed 
+    public function getMenuById(int $id): mixed
     {
         $record = OlivemenusRecord::findOne([
             'id' => $id
@@ -69,7 +70,7 @@ class OlivemenusService extends Component
         ]);
     }
 
-    public function deleteMenuById(int $id): mixed 
+    public function deleteMenuById(int $id): mixed
     {
         $record = OlivemenusRecord::findOne([
             'id' => $id
@@ -83,7 +84,7 @@ class OlivemenusService extends Component
         }
     }
 
-    public function saveMenu(OlivemenusModel $model): mixed 
+    public function saveMenu(OlivemenusModel $model): mixed
     {
         $record = false;
         if (isset($model->id)) {
@@ -306,15 +307,7 @@ class OlivemenusService extends Component
             return false;
         }
 
-        $currentActiveUrl = Craft::$app->request->getServerName() . Craft::$app->request->getUrl();
-        if ($currentActiveUrl === '') {
-            return false;
-        }
-
-        $urlFiltered = preg_replace('#^https?://#', '', $url);
-        $currentActiveUrl = preg_replace('/\?.*/', '', $currentActiveUrl);
-
-        return $currentActiveUrl === $urlFiltered;
+        return UrlHelper::rootRelativeUrl($url) == UrlHelper::stripQueryString(Craft::$app->request->getUrl());
     }
 
     private function getMenuItemHTML(array $menuItem, array $config): string
@@ -411,7 +404,7 @@ class OlivemenusService extends Component
         return $attributes;
     }
 
-    private function replaceEnvironmentVariables(string $str): mixed 
+    private function replaceEnvironmentVariables(string $str): mixed
     {
         $environmentVariables = Craft::$app->config->general->aliases;
         if (is_array($environmentVariables)) {
